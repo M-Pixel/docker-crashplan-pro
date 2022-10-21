@@ -22,11 +22,6 @@ WORKDIR /tmp
 COPY src/crashplan /crashplan-build
 RUN /crashplan-build/build.sh "${CRASHPLAN_URL}"
 
-# Build YAD.
-FROM alpine:3.14 AS yad
-COPY src/yad/build.sh /build-yad.sh
-RUN /build-yad.sh
-
 # Pull base image.
 FROM jlesage/baseimage-gui:ubuntu-20.04-v3.5.8
 ARG DOCKER_IMAGE_VERSION
@@ -64,9 +59,6 @@ RUN \
     #       '/usr/local/crashplan/metadata' in 6.7.1.
     ln -s /config/repository/metadata /usr/local/crashplan/metadata
 
-# Install YAD.
-COPY --from=yad /tmp/yad-install/usr/bin/yad /usr/bin/
-
 # Misc adjustments.
 RUN  \
     # Remove the 'nobody' user.  This is to avoid issue when the container is
@@ -88,7 +80,9 @@ RUN \
         # The following package is used to send key presses to the X process.
         xdotool \
         # For the monitor.
-        bc && \
+        bc \
+        yad \
+        && \
     rm -rf /var/lib/apt/lists/*
 
 # Adjust the openbox config.
