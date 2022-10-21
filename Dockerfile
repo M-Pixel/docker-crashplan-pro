@@ -82,12 +82,14 @@ RUN  \
 
 # Install dependencies.
 RUN \
-    add-pkg libselinux --repository http://dl-cdn.alpinelinux.org/alpine/edge/community && \
-    add-pkg \
+    apt-get update && \
+    apt-get install --no-install-recommends --yes \
+        libselinux1 \
         # The following package is used to send key presses to the X process.
         xdotool \
         # For the monitor.
-        bc
+        bc && \
+    rm -rf /var/lib/apt/lists/*
 
 # Adjust the openbox config.
 RUN \
