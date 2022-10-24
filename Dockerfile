@@ -63,9 +63,9 @@ RUN \
 RUN  \
     # Remove the 'nobody' user.  This is to avoid issue when the container is
     # running under ID 65534.
-    sed-patch '/^nobody:/d' /defaults/passwd && \
-    sed-patch '/^nobody:/d' /defaults/group && \
-    sed-patch '/^nobody:/d' /defaults/shadow && \
+    sed-patch '/^nobody:/d' /etc/passwd && \
+    sed-patch '/^nogroup:/d' /etc/group && \
+    sed-patch '/^nobody:/d' /etc/shadow && \
     # Clear stuff from /etc/fstab to avoid showing irrelevant devices in the open
     # file dialog window.
     echo > /etc/fstab && \
