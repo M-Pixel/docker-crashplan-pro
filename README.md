@@ -52,7 +52,7 @@ is protected and easily accessible.
          * [Crashes / Maximum Amount of Allocated Memory](#crashes--maximum-amount-of-allocated-memory)
          * [Inotify's Watch Limit](#inotifys-watch-limit)
             * [Synology](#synology-1)
-         * [Empty /storage](#empty-storage)
+         * [Empty /mnt/raid](#empty-storage)
          * [Device Status Is Waiting For Connection](#device-status-is-waiting-for-connection)
          * [Cannot Restore Files](#cannot-restore-files)
          * [Upgrade Failed Error Message](#upgrade-failed-error-message)
@@ -69,7 +69,7 @@ docker run -d \
     --name=crashplan-pro \
     -p 5800:5800 \
     -v /docker/appdata/crashplan-pro:/config:rw \
-    -v $HOME:/storage:ro \
+    -v $HOME:/mnt/raid:ro \
     jlesage/crashplan-pro
 ```
 
@@ -78,7 +78,7 @@ Where:
   - `$HOME`: This location contains files from your host that need to be accessible by the application.
 
 Browse to `http://your-host-ip:5800` to access the CrashPlan PRO GUI.
-Files from the host appear under the `/storage` folder in the container.
+Files from the host appear under the `/mnt/raid` folder in the container.
 
 ## Usage
 
@@ -130,7 +130,7 @@ format: `<HOST_DIR>:<CONTAINER_DIR>[:PERMISSIONS]`.
 | Container path  | Permissions | Description |
 |-----------------|-------------|-------------|
 |`/config`| rw | This is where the application stores its configuration, log and any files needing persistency. |
-|`/storage`| ro | This location contains files from your host that need to be accessible by the application. |
+|`/mnt/raid`| ro | This location contains files from your host that need to be accessible by the application. |
 
 ### Ports
 
@@ -186,7 +186,7 @@ services:
       - "5800:5800"
     volumes:
       - "/docker/appdata/crashplan-pro:/config:rw"
-      - "$HOME:/storage:ro"
+      - "$HOME:/mnt/raid:ro"
 ```
 
 ## Docker Image Update
@@ -499,7 +499,7 @@ Here is a summary of what needs to be done:
 
 **NOTE**: Don't be confused by the directory structure from your old being
 visible in the *Manage Files* window.  By default, your files are now located
-under the `/storage` folder.
+under the `/mnt/raid` folder.
 
 ## Migrating From CrashPlan for Home
 
@@ -571,9 +571,9 @@ permanent.
 **NOTE**: After an upgrade of the DSM software, verify that the content of the
 file has not been overwritten.
 
-### Empty `/storage`
+### Empty `/mnt/raid`
 
-If the `/storage` folder inside the container is empty:
+If the `/mnt/raid` folder inside the container is empty:
 
   - Make sure the folder is properly mapped to the host.  This is done via the
     `-v` parameter of the `docker run` command.  See the [Usage](#usage)
@@ -606,14 +606,14 @@ the cache of CrashPlan can help resolve the issue:
 If CrashPlan fails to restore files, make sure the location where files are
 restored have write permission.
 
-A typical installation has the data to be backup under the `/storage` folder.
-This folder is usually mapped to the host with *read-only* permission.  Thus,
-restoring files to `/storage` won't be allowed.  The solution is to temporarily
-change the permission of the volume to *read-write*.
+A typical installation has the data to be backup under the `/mnt/raid` folder.  This
+folder is usually mapped to the host with *read-only* permission.  Thus, restoring
+files to `/mnt/raid` won't be allowed.  The solution is to temporarily change the
+permission of the volume to *read-write*.
 
-For example, if `/storage` is mapped to `$HOME` on the host, the container would
+For example, if `/mnt/raid` is mapped to `$HOME` on the host, the container would
 need to be deleted and then re-created with the same arguments, with the exception
-of `-v $HOME:/storage:ro` that is replaced with `-v $HOME:/storage:rw`.
+of `-v $HOME:/mnt/raid:ro` that is replaced with `-v $HOME:/mnt/raid:rw`.
 
 ### Upgrade Failed Error Message
 

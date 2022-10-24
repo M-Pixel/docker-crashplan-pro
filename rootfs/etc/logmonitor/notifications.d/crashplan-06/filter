@@ -5,7 +5,7 @@ set -u # Treat unset variables as an error.
 
 LINE="$1"
 
-if echo "$LINE" | grep -q "Problem restoring file - .* sourcePath=/storage/.* (Read-only file system)"; then
+if echo "$LINE" | grep -q "Problem restoring file - .* sourcePath=/mnt/raid/.* (Read-only file system)"; then
     exit 0
 fi
 

@@ -32,7 +32,7 @@ docker run -d \
     --name=crashplan-pro \
     -p 5800:5800 \
     -v /docker/appdata/crashplan-pro:/config:rw \
-    -v $HOME:/storage:ro \
+    -v $HOME:/mnt/raid:ro \
     jlesage/crashplan-pro
 ```
 
@@ -41,7 +41,7 @@ Where:
   - `$HOME`: This location contains files from your host that need to be accessible by the application.
 
 Browse to `http://your-host-ip:5800` to access the CrashPlan PRO GUI.
-Files from the host appear under the `/storage` folder in the container.
+Files from the host appear under the `/mnt/raid` folder in the container.
 
 ## Documentation
 

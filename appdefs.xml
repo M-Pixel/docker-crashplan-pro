@@ -68,7 +68,7 @@ Here is a summary of what needs to be done:
 
 **NOTE**: Don't be confused by the directory structure from your old being
 visible in the *Manage Files* window.  By default, your files are now located
-under the `/storage` folder.
+under the `/mnt/raid` folder.
         </content>
       </section>
       <section>
@@ -154,9 +154,9 @@ file has not been overwritten.
         </content>
       </section>
       <section>
-        <title level="3">Empty `/storage`</title>
+        <title level="3">Empty `/mnt/raid`</title>
         <content>
-If the `/storage` folder inside the container is empty:
+If the `/mnt/raid` folder inside the container is empty:
 
   - Make sure the folder is properly mapped to the host.  This is done via the
     `-v` parameter of the `docker run` command.  See the [Usage](#usage)
@@ -193,14 +193,14 @@ the cache of CrashPlan can help resolve the issue:
 If CrashPlan fails to restore files, make sure the location where files are
 restored have write permission.
 
-A typical installation has the data to be backup under the `/storage` folder.
+A typical installation has the data to be backup under the `/mnt/raid` folder.
 This folder is usually mapped to the host with *read-only* permission.  Thus,
-restoring files to `/storage` won't be allowed.  The solution is to temporarily
+restoring files to `/mnt/raid` won't be allowed.  The solution is to temporarily
 change the permission of the volume to *read-write*.
 
-For example, if `/storage` is mapped to `$HOME` on the host, the container would
+For example, if `/mnt/raid` is mapped to `$HOME` on the host, the container would
 need to be deleted and then re-created with the same arguments, with the exception
-of `-v $HOME:/storage:ro` that is replaced with `-v $HOME:/storage:rw`.
+of `-v $HOME:/mnt/raid:ro` that is replaced with `-v $HOME:/mnt/raid:rw`.
         </content>
       </section>
       <section>
@@ -511,7 +511,7 @@ latest version will also bring the latest version of CrashPlan.
         <change level="2">Make sure the log monitor is started after the X server.</change>
         <change level="2">Fixed an issue where the log monitor `yad` target would use XDG folders of the application.</change>
         <change level="2">Fixed issue where log monitor states were not cleared during container startup.</change>
-        <change>Trigger a notification when file restore fails due to `/storage` being read-only.</change>
+        <change>Trigger a notification when file restore fails due to `/mnt/raid` being read-only.</change>
       </release>
       <release>
         <version>2.2.1</version>
