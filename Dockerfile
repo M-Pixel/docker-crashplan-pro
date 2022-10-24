@@ -112,9 +112,8 @@ ENV S6_WAIT_FOR_SERVICE_MAXTIME=10000 \
     APP_NAME="CrashPlan for Small Business" \
     KEEP_APP_RUNNING=1
 
-# Define mountable directories.
+# Define persistent directory
 VOLUME ["/config"]
-VOLUME ["/storage"]
 
 # Metadata.
 LABEL \
